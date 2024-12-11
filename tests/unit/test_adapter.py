@@ -48,6 +48,7 @@ class TestTrinoAdapter(unittest.TestCase):
                         "query_max_run_time": "4h",
                         "exchange_compression": True,
                     },
+                    "suppress_cert_warning": True,
                 }
             },
             "target": "test",
