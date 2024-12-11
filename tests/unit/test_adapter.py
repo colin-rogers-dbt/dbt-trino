@@ -207,12 +207,12 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
                 "client_tags": ["dev", "none_with_method"],
                 "http_headers": {"X-Trino-Client-Info": "dbt-trino"},
                 "http_scheme": "https",
+                "suppress_cert_warning": True,
                 "session_properties": {
                     "query_max_run_time": "4h",
                     "exchange_compression": True,
                 },
                 "timezone": "UTC",
-                "suppress_cert_warning": False,
             }
         )
         credentials = connection.credentials
@@ -222,7 +222,7 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
         self.assertEqual(credentials.cert, "/path/to/cert")
         self.assertEqual(credentials.client_tags, ["dev", "none_with_method"])
         self.assertEqual(credentials.timezone, "UTC")
-        self.assertEqual(credentials.suppress_cert_warning, False)
+        self.assertEqual(credentials.suppress_cert_warning, True)
 
     def test_none_authentication_without_http_scheme(self):
         connection = self.acquire_connection_with_profile(
@@ -237,12 +237,12 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
                 "cert": "/path/to/cert",
                 "client_tags": ["dev", "without_http_scheme"],
                 "http_headers": {"X-Trino-Client-Info": "dbt-trino"},
+                "suppress_cert_warning": True,
                 "session_properties": {
                     "query_max_run_time": "4h",
                     "exchange_compression": True,
                 },
                 "timezone": "UTC",
-                "suppress_cert_warning": False,
             }
         )
         credentials = connection.credentials
@@ -252,7 +252,7 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
         self.assertEqual(credentials.cert, "/path/to/cert")
         self.assertEqual(credentials.client_tags, ["dev", "without_http_scheme"])
         self.assertEqual(credentials.timezone, "UTC")
-        self.assertEqual(credentials.suppress_cert_warning, False)
+        self.assertEqual(credentials.suppress_cert_warning, True)
 
     def test_ldap_authentication(self):
         test_cases = [(False, "trino_user"), (True, "impersonated_user")]
@@ -271,12 +271,12 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
                     "cert": "/path/to/cert",
                     "client_tags": ["dev", "ldap"],
                     "http_headers": {"X-Trino-Client-Info": "dbt-trino"},
+                    "suppress_cert_warning": True,
                     "session_properties": {
                         "query_max_run_time": "4h",
                         "exchange_compression": True,
                     },
                     "timezone": "UTC",
-                    "suppress_cert_warning": True,
                 }
             )
             credentials = connection.credentials
@@ -304,12 +304,12 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
                 "cert": "/path/to/cert",
                 "client_tags": ["dev", "kerberos"],
                 "http_headers": {"X-Trino-Client-Info": "dbt-trino"},
+                "suppress_cert_warning": True,
                 "session_properties": {
                     "query_max_run_time": "4h",
                     "exchange_compression": True,
                 },
                 "timezone": "UTC",
-                "suppress_cert_warning": False,
             }
         )
         credentials = connection.credentials
@@ -319,7 +319,7 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
         self.assertEqual(credentials.cert, "/path/to/cert")
         self.assertEqual(credentials.client_tags, ["dev", "kerberos"])
         self.assertEqual(credentials.timezone, "UTC")
-        self.assertEqual(credentials.suppress_cert_warning, False)
+        self.assertEqual(credentials.suppress_cert_warning, True)
 
     def test_certificate_authentication(self):
         connection = self.acquire_connection_with_profile(
@@ -335,12 +335,12 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
                 "http_headers": {"X-Trino-Client-Info": "dbt-trino"},
                 "client_certificate": "/path/to/client_cert",
                 "client_private_key": "password",
+                "suppress_cert_warning": True,
                 "session_properties": {
                     "query_max_run_time": "4h",
                     "exchange_compression": True,
                 },
                 "timezone": "UTC",
-                "suppress_cert_warning": False,
             }
         )
         credentials = connection.credentials
@@ -355,7 +355,7 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
         self.assertEqual(credentials.cert, "/path/to/cert")
         self.assertEqual(credentials.client_tags, ["dev", "certificate"])
         self.assertEqual(credentials.timezone, "UTC")
-        self.assertEqual(credentials.suppress_cert_warning, False)
+        self.assertEqual(credentials.suppress_cert_warning, True)
 
     def test_jwt_authentication(self):
         connection = self.acquire_connection_with_profile(
@@ -370,12 +370,12 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
                 "jwt_token": "aabbccddeeff",
                 "client_tags": ["dev", "jwt"],
                 "http_headers": {"X-Trino-Client-Info": "dbt-trino"},
+                "suppress_cert_warning": True,
                 "session_properties": {
                     "query_max_run_time": "4h",
                     "exchange_compression": True,
                 },
                 "timezone": "UTC",
-                "suppress_cert_warning": False,
             }
         )
         credentials = connection.credentials
@@ -385,7 +385,7 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
         self.assertEqual(credentials.cert, "/path/to/cert")
         self.assertEqual(credentials.client_tags, ["dev", "jwt"])
         self.assertEqual(credentials.timezone, "UTC")
-        self.assertEqual(credentials.suppress_cert_warning, False)
+        self.assertEqual(credentials.suppress_cert_warning, True)
 
     def test_oauth_authentication(self):
         connection = self.acquire_connection_with_profile(
@@ -399,12 +399,12 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
                 "cert": "/path/to/cert",
                 "client_tags": ["dev", "oauth"],
                 "http_headers": {"X-Trino-Client-Info": "dbt-trino"},
+                "suppress_cert_warning": True,
                 "session_properties": {
                     "query_max_run_time": "4h",
                     "exchange_compression": True,
                 },
                 "timezone": "UTC",
-                "suppress_cert_warning": False,
             }
         )
         credentials = connection.credentials
@@ -415,7 +415,7 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
         self.assertEqual(connection.credentials.prepared_statements_enabled, True)
         self.assertEqual(credentials.client_tags, ["dev", "oauth"])
         self.assertEqual(credentials.timezone, "UTC")
-        self.assertEqual(credentials.suppress_cert_warning, False)
+        self.assertEqual(credentials.suppress_cert_warning, True)
 
     def test_oauth_console_authentication(self):
         connection = self.acquire_connection_with_profile(
@@ -429,12 +429,12 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
                 "cert": "/path/to/cert",
                 "client_tags": ["dev", "oauth_console"],
                 "http_headers": {"X-Trino-Client-Info": "dbt-trino"},
+                "suppress_cert_warning": True,
                 "session_properties": {
                     "query_max_run_time": "4h",
                     "exchange_compression": True,
                 },
                 "timezone": "UTC",
-                "suppress_cert_warning": False,
             }
         )
         credentials = connection.credentials
@@ -445,7 +445,7 @@ class TestTrinoAdapterAuthenticationMethods(unittest.TestCase):
         self.assertEqual(connection.credentials.prepared_statements_enabled, True)
         self.assertEqual(credentials.client_tags, ["dev", "oauth_console"])
         self.assertEqual(credentials.timezone, "UTC")
-        self.assertEqual(credentials.suppress_cert_warning, False)
+        self.assertEqual(credentials.suppress_cert_warning, True)
 
 
 class TestPreparedStatementsEnabled(TestCase):
