@@ -487,7 +487,6 @@ class TrinoConnectionManager(SQLConnectionManager):
 
         if credentials.suppress_cert_warning:
             import urllib3
-
             urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
         # it's impossible for trino to fail here as 'connections' are actually
